@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Meu App de Notas</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+</head>
+
+<body>
+  <p>Olá Mundo!</p>
+
+  <form action="/action_page.php">
+    <label for="fname">First name:</label><br>
+    <input type="text" id="fname" name="fname" value="John"><br>
+    <label for="lname">Last name:</label><br>
+    <input type="text" id="lname" name="lname" value="Doe"><br><br>
+    <input type="submit" value="Submit">
+  </form>
+
+  <ol>
+    <li>Note 1</li>
+    <ul>
+      <li>This is note 1</li>
+    </ul>
+    <li>Note 2</li>
+    <ul>
+      <li>
+        This is Note 2
+      </li>
+    </ul>
+  </ol>
+
+  <script src="https://unpkg.com/petite-vue" defer init></script>
+
+  <!-- anywhere on the page -->
+  <div v-scope="{ count: 0 }">
+    {{ count }}
+    <button @click="count++">inc</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('http://localhost:8080/notes')
+        .then(response => response.json())
+        .then(data => {
+          // aqui que eu faço as coisas
+          console.log(data);
+        })
+        .catch(error => console.error('Error fetching notes:', error));
+    });
+  </script>
+</body>
+
+</html>

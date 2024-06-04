@@ -7,7 +7,8 @@ import java.util.UUID
 @Serializable
 class NoteRequest(
     val title: String,
-    val message: String
+    val message: String,
+    val verified: Boolean
 )
 
 fun NoteRequest.toNote(
@@ -16,6 +17,7 @@ fun NoteRequest.toNote(
     return Note(
         id = id,
         title = title,
-        message = message
+        message = message,
+        verified = verified
     )
 }

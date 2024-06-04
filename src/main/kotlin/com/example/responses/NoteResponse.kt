@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 class NoteResponse(
   val id: String,
   val title: String,
-  val message: String
+  val message: String,
+  val verified: Boolean
 )

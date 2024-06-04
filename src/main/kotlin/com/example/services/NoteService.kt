@@ -13,6 +13,7 @@ class NoteService(database: Database) {
     val id = uuid("id")
     val title = varchar("title", 255)
     val message = text("message")
+    val verified = bool("verified")
 
     override val primaryKey = PrimaryKey(id)
   }
@@ -39,6 +40,7 @@ class NoteService(database: Database) {
       Notes.update({ Notes.id eq note.id }) {
         it[title] = note.title
         it[message] = note.message
+        it[verified] = note.verified
       }
     } else {
       // Insert new note
@@ -46,6 +48,7 @@ class NoteService(database: Database) {
         it[id] = note.id
         it[title] = note.title
         it[message] = note.message
+        it[verified] = note.verified
       }
     }
   
@@ -58,5 +61,5 @@ class NoteService(database: Database) {
   }
 
   private fun ResultRow.toNote() =
-      Note(id = this[Notes.id], title = this[Notes.title], message = this[Notes.message])
+      Note(id = this[Notes.id], title = this[Notes.title], message = this[Notes.message], verified = this[Notes.verified])
 }

@@ -41,5 +41,19 @@ fun Application.configureNoteRouting(service: NoteService) {
       service.delete(id)
       call.respond(HttpStatusCode.OK)
     }
+    get("/get_info") {
+      val notes = service.findAll()
+      val totalNotes = notes.size
+      val verifiedNotes = notes.count { it.verified }
+      val notVerifiedNotes = totalNotes - verifiedNotes
+
+      val response = mapOf(
+        "totalNotes" to totalNotes,
+        "verifiedNotes" to verifiedNotes,
+        "notVerifiedNotes" to notVerifiedNotes
+      )
+
+      call.respond(HttpStatusCode.OK, response)
+    }
   }
 }

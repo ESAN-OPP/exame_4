@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes App</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <script src="https://unpkg.com/petite-vue" defer init></script>
+</head>
+
+<body>
+
+  <main class="container">
+    <h1>Notes App</h1>
+
+    <!-- Form to add a new note -->
+    <section v-scope="{ title: '', message: '', addNote, fetchNotes, notes: [] }" @vue:mounted="fetchNotes()">
+      <form @submit.prevent="addNote">
+        <label for="title">Title</label>
+        <input type="text" id="title" v-model="title" required>
+
+        <label for="message">Message</label>
+        <textarea id="message" v-model="message" required></textarea>
+
+        <button type="submit">Add Note</button>
+      </form>
+
+      <!-- List of notes -->
+      <section>
+        <h2>Notes</h2>
+        <div class="grid">
+          <template v-for="note in notes">
+            <article>
+              <h3>{{ note.title }}</h3>
+              <p>{{ note.message }}</p>
+            </article>
+          </template>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    function addNote() {
+      fetch('http://localhost:8080/notes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ title: this.title, message: this.message })
+      })
+        .then(response => response.json())
+        .then(data => {
+          this.notes.push(data);
+          this.title = '';
+          this.message = '';
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function fetchNotes() {
+      fetch('http://localhost:8080/notes')
+        .then(response => response.json())
+        .then(data => {
+          this.notes = data;
+        })
+        .catch(error => console.error('Error:', error));
+    }
+  </script>
+
+</body>
+
+</html>

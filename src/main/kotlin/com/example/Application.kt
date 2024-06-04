@@ -9,6 +9,11 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import org.jetbrains.exposed.sql.Database
+// Add CORS
+import io.ktor.server.plugins.cors.routing.*
+import io.ktor.http.HttpMethod
+import io.ktor.http.HttpHeaders
+
 
 fun main() {
     embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
@@ -21,6 +26,15 @@ fun Application.module() {
     // configureRouting()
 
     install(ContentNegotiation) { json() }
+    install(CORS) {
+        allowMethod(HttpMethod.Get)
+        allowMethod(HttpMethod.Post)
+        allowMethod(HttpMethod.Put)
+        allowMethod(HttpMethod.Delete)
+        allowHeader(HttpHeaders.ContentType)
+        allowHost("localhost:8000") 
+        anyHost()
+    }
 
     val database =
             Database.connect(

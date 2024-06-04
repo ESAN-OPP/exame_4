@@ -25,6 +25,7 @@ repositories {
 
 dependencies {
     implementation("io.ktor:ktor-server-core-jvm")
+    implementation("io.ktor:ktor-server-cors:2.3.0") // CORS Support
     implementation("io.ktor:ktor-server-content-negotiation-jvm")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm")
     implementation("org.jetbrains.exposed:exposed-core:0.41.1")
